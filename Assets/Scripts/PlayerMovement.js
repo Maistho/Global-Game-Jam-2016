@@ -11,9 +11,10 @@ function Start () {
 	physBody = GetComponent.<Rigidbody2D>();
 }
 
-function OnCollisionExit2D(obj: Collision2D) {
-	Debug.Log('hej');
+function OnTriggerEnter2D(obj: Collider2D) {
+	Debug.Log('colliding');
 }
+
 
 
 function Update () {
