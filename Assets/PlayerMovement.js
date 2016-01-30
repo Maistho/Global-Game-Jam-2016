@@ -14,16 +14,18 @@ function Update () {
 	var rsH = CrossPlatformInputManager.GetAxis('RightStickH');
 
 
-	if (rsV || rsH) {
+	if (Mathf.Abs(rsV) + Mathf.Abs(rsH) > 0.1) { //If we have gamepad input
 		var pos = Mathf.Atan2(rsV,rsH) * Mathf.Rad2Deg - 90;
 		Debug.Log(pos);
 		transform.rotation = Quaternion.Euler(0,0,pos);
-	} else {
+
+	} else { //use mouse input
 		var mousePosition = Camera.main.ScreenToWorldPoint(CrossPlatformInputManager.mousePosition);
 		Debug.Log(mousePosition);
 		transform.rotation = Quaternion.LookRotation(transform.position - mousePosition, Vector3.forward);
 	}
 
+	//Remove all rotations that are not in z-axis
 	transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 	physBody.angularVelocity = 0;
 }
