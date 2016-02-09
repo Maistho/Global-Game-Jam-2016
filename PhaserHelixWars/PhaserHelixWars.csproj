@@ -32,11 +32,14 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="Spawn.ts" />
+    <TypeScriptCompile Include="src\Bullet.ts" />
+    <TypeScriptCompile Include="src\CollisionGroups.ts" />
+    <TypeScriptCompile Include="src\Enemy.ts" />
+    <TypeScriptCompile Include="src\Spawn.ts" />
     <TypeScriptCompile Include="typedefs\p2.d.ts" />
     <TypeScriptCompile Include="typedefs\phaser.d.ts" />
     <TypeScriptCompile Include="typedefs\pixi.d.ts" />
-    <TypeScriptCompile Include="Player.ts" />
+    <TypeScriptCompile Include="src\Player.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
