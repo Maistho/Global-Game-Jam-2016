@@ -1,6 +1,20 @@
-﻿export class CollisionGroup {
-    static Player: Phaser.Physics.P2.CollisionGroup     = new Phaser.Physics.P2.CollisionGroup(Math.pow(2, 1));
-    static Enemy: Phaser.Physics.P2.CollisionGroup      = new Phaser.Physics.P2.CollisionGroup(Math.pow(2, 2));
-    static Terrain: Phaser.Physics.P2.CollisionGroup    = new Phaser.Physics.P2.CollisionGroup(Math.pow(2, 3));
-    static Projectile: Phaser.Physics.P2.CollisionGroup = new Phaser.Physics.P2.CollisionGroup(Math.pow(2, 4));
+﻿module Helix { 
+    export class CollisionGroup {
+        static Player: number = 0;
+        static Enemy: number = 1;
+        static Terrain: number = 2;
+        static Projectile: number = 3;
+        constructor(game: Phaser.Game) {
+            for (let i = 0; i < 4; ++i) {
+                game.physics.p2.createCollisionGroup();
+            }
+
+            game.physics.p2.updateBoundsCollisionGroup();
+
+            console.log('Created ' +
+                game.physics.p2.collisionGroups.length +
+                ' CollisionGroups!',
+                game.physics.p2.collisionGroups);
+        }
+    }
 }

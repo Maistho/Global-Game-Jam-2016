@@ -1,40 +1,54 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports", 'src/Player', 'src/Spawn'], function (require, exports, Player_1, Spawn_1) {
-    var HelixGame = (function () {
+    var CollisionGroup = (function () {
+        function CollisionGroup(game) {
+            this.Player = game.physics.p2.createCollisionGroup();
+            this.Enemy = game.physics.p2.createCollisionGroup();
+            this.Terrain = game.physics.p2.createCollisionGroup();
+            this.Projectile = game.physics.p2.createCollisionGroup();
+        }
+        return CollisionGroup;
+    })();
+    var HelixGame = (function (_super) {
+        __extends(HelixGame, _super);
         function HelixGame() {
-            this.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'content', {
-                preload: this.preload,
-                create: this.create,
-                update: this.update,
-                render: this.render
-            });
+            _super.call(this, window.innerWidth, window.innerHeight, Phaser.AUTO, 'content', null);
         }
         HelixGame.prototype.preload = function () {
-            this.game.load.image('player', 'sprites/Turquise_Pointy_Character.png');
-            this.game.load.image('checkerboard', 'sprites/checkerboard.png');
-            this.game.load.image('Helix', 'sprites/Helix_Fossil.png');
-            this.game.load.image('RegularEnemy', 'sprites/Magenta_Pointy_Character.png');
-            this.game.load.image('bullet', 'sprites/Arrow.png');
-            this.game.time.advancedTiming = true;
-            //this.game.stage.disableVisibilityChange = true;
+            console.log('in preload');
+            this.load.image('player', 'sprites/Turquise_Pointy_Character.png');
+            this.load.image('checkerboard', 'sprites/checkerboard.png');
+            this.load.image('Helix', 'sprites/Helix_Fossil.png');
+            this.load.image('RegularEnemy', 'sprites/Magenta_Pointy_Character.png');
+            this.load.image('bullet', 'sprites/Arrow.png');
+            this.time.advancedTiming = true;
+            //this.stage.disableVisibilityChange = true;
         };
         HelixGame.prototype.create = function () {
             var _this = this;
-            this.game.world.setBounds(0, 0, 2920, 2920);
-            this.game.add.tileSprite(0, 0, 2920, 2920, 'checkerboard');
-            this.game.physics.startSystem(Phaser.Physics.P2JS);
-            this.game.physics.p2.updateBoundsCollisionGroup();
-            //this.game.physics.p2.setImpactEvents(true);
-            this.bullets = this.game.add.group();
-            this.players = this.game.add.group();
-            this.players.add(new Player_1.Player(this.game, this.game.world.centerX, this.game.world.centerY, this.game.input.gamepad.pad3));
+            console.log('in create');
+            this.world.setBounds(0, 0, 2920, 2920);
+            this.add.tileSprite(0, 0, 2920, 2920, 'checkerboard');
+            this.physics.startSystem(Phaser.Physics.P2JS);
+            this.CollisionGroup = new CollisionGroup(this);
+            this.physics.p2.updateBoundsCollisionGroup();
+            //this.physics.p2.setImpactEvents(true);
+            this.bullets = this.add.group();
+            debugger;
+            this.players = this.add.group();
+            this.players.add(new Player_1.Player(this, this.world.centerX, this.world.centerY, this.input.gamepad.pad2));
             this.spawns = [];
-            this.spawns.push(new Spawn_1.Spawn(this.game, this.game.world.centerX, this.game.world.centerY, Spawn_1.SpawnType.Helix));
-            this.game.input.gamepad.setDeadZones(0.01);
-            this.game.camera.follow(this.players.getAt(0));
-            this.game.input.gamepad.start();
+            this.spawns.push(new Spawn_1.Spawn(this, this.world.centerX, this.world.centerY, Spawn_1.SpawnType.Helix));
+            this.input.gamepad.setDeadZones(0.01);
+            this.camera.follow(this.players.getAt(0));
+            this.input.gamepad.start();
             setInterval(function () {
-                _this.game.input.gamepad.stop();
-                _this.game.input.gamepad.start();
+                _this.input.gamepad.stop();
+                _this.input.gamepad.start();
             }, 1000);
         };
         HelixGame.prototype.update = function () {
@@ -43,10 +57,10 @@ define(["require", "exports", 'src/Player', 'src/Spawn'], function (require, exp
             }, this);
         };
         HelixGame.prototype.render = function () {
-            this.game.debug.text(this.game.time.fps.toString() || '--', 2, 14, "#00ff00");
+            this.debug.text(this.time.fps.toString() || '--', 2, 14, "#00ff00");
         };
         return HelixGame;
-    })();
+    })(Phaser.Game);
     exports.HelixGame = HelixGame;
     var game = new HelixGame();
 });

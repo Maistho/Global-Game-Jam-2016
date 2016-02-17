@@ -3,7 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define(["require", "exports", './Bullet', './CollisionGroups'], function (require, exports, Bullet_1, CollisionGroups_1) {
+define(["require", "exports", './Bullet'], function (require, exports, Bullet_1) {
     var Player = (function (_super) {
         __extends(Player, _super);
         function Player(game, x, y, gamepad) {
@@ -13,8 +13,8 @@ define(["require", "exports", './Bullet', './CollisionGroups'], function (requir
             this.anchor.set(0.5, 0.4);
             this.scale.set(0.2);
             game.physics.p2.enable(this);
-            this.body.setCollisionGroup(CollisionGroups_1.CollisionGroup.Player);
-            this.body.collides([CollisionGroups_1.CollisionGroup.Projectile, CollisionGroups_1.CollisionGroup.Player, CollisionGroups_1.CollisionGroup.Terrain]);
+            this.body.setCollisionGroup(game.CollisionGroup.Player);
+            this.body.collides([game.CollisionGroup.Projectile, game.CollisionGroup.Player, game.CollisionGroup.Terrain]);
             this.body.setCircle(60, 0, -10);
             game.add.existing(this);
             this.gamepad.addCallbacks(this, {
@@ -22,7 +22,7 @@ define(["require", "exports", './Bullet', './CollisionGroups'], function (requir
                     var shootButton = _this.gamepad.getButton(Phaser.Gamepad.BUTTON_5);
                     shootButton.onDown.add(function () {
                         console.log('shooty shooty');
-                        var bullet = new Bullet_1.Bullet(_this.game, _this.x, _this.y, _this.rotation);
+                        var bullet = new Bullet_1.Bullet(_this.game, _this.x, _this.y, _this.body.rotation + Math.PI);
                     });
                 }
             });

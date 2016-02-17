@@ -3,7 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define(["require", "exports", './CollisionGroups'], function (require, exports, CollisionGroups_1) {
+define(["require", "exports"], function (require, exports) {
     (function (EnemyType) {
         EnemyType[EnemyType["Regular"] = 0] = "Regular";
         EnemyType[EnemyType["Weird"] = 1] = "Weird";
@@ -17,8 +17,9 @@ define(["require", "exports", './CollisionGroups'], function (require, exports, 
             this.scale.set(0.2);
             //this.tint = 0xff00ff;
             game.physics.p2.enable(this);
-            this.body.setCollisionGroup(CollisionGroups_1.CollisionGroup.Enemy);
-            this.body.collides([CollisionGroups_1.CollisionGroup.Projectile, CollisionGroups_1.CollisionGroup.Enemy, CollisionGroups_1.CollisionGroup.Terrain]);
+            this.body.setCollisionGroup(game.CollisionGroup.Projectile);
+            this.body.collides([game.CollisionGroup.Projectile, game.CollisionGroup.Terrain]);
+            this.body.updateCollisionMask();
             this.body.setCircle(60, 0, -10);
             this.body.rotation = rotation + Math.PI;
             this.body.thrust(-10000);

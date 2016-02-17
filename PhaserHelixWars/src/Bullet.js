@@ -10,14 +10,19 @@ define(["require", "exports"], function (require, exports) {
             var _this = this;
             _super.call(this, game, x, y, 'bullet');
             this.anchor.set(0.5, 0.5);
-            this.scale.set(0.2);
+            this.scale.set(0.1);
             game.physics.p2.enable(this);
             this.events.onOutOfBounds.add(function () {
                 _this.kill();
             }, this);
-            // this.body.kinematic = true;
-            //this.body.setCollisionGroup(CollisionGroup.Projectile);
-            //this.body.collides([CollisionGroup.Enemy, CollisionGroup.Player]);
+            //this.body.kinematic = true;
+            this.body.rotation = rotation;
+            var speed = 200;
+            this.body.velocity.x = Math.sin(rotation) * speed;
+            this.body.velocity.y = Math.cos(rotation) * -speed;
+            this.body.setCollisionGroup(game.CollisionGroup.Projectile);
+            this.body.collides([game.CollisionGroup.Enemy, game.CollisionGroup.Player]);
+            this.body.updateCollisionMask();
             this.body.onBeginContact.add(function (body, bodyB, shapeA, shapeB, equation) {
                 console.log(body.sprite.key);
             }, this);

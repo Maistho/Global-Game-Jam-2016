@@ -35,6 +35,8 @@
     <TypeScriptCompile Include="src\Bullet.ts" />
     <TypeScriptCompile Include="src\CollisionGroups.ts" />
     <TypeScriptCompile Include="src\Enemy.ts" />
+    <TypeScriptCompile Include="src\game.ts" />
+    <TypeScriptCompile Include="src\Level1.ts" />
     <TypeScriptCompile Include="src\Spawn.ts" />
     <TypeScriptCompile Include="typedefs\p2.d.ts" />
     <TypeScriptCompile Include="typedefs\phaser.d.ts" />
@@ -83,9 +85,8 @@
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
-    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
-    <TypeScriptOutFile>
-    </TypeScriptOutFile>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptOutFile>game.js</TypeScriptOutFile>
     <TypeScriptOutDir />
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
