@@ -13,6 +13,7 @@
             this.load.image('bullet', 'sprites/Arrow.png');
 
             this.load.audio('hit1', 'audio/hit_01.ogg');
+            this.load.audio('shoot', 'audio/shoot.ogg');
 
             this.time.advancedTiming = true;
 

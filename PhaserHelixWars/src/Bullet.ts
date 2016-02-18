@@ -19,7 +19,7 @@
             this.body.kinematic = true;
             this.body.rotation = rotation;
 
-            let speed = 300;
+            let speed = 800;
             this.body.velocity.x = Math.sin(rotation) * speed;
             this.body.velocity.y = Math.cos(rotation) * -speed;
 
@@ -28,9 +28,11 @@
                 game.physics.p2.collisionGroups[CollisionGroup.Enemy],
                 game.physics.p2.collisionGroups[CollisionGroup.Terrain]
             ], (obj1: Phaser.Physics.P2.Body, obj2: Phaser.Physics.P2.Body) => {
-                this.destroy();
+                this.kill();
                 obj2.sprite.damage(1);
-            });
+                });
+            this.checkWorldBounds = true;
+            this.outOfBoundsKill = true;
 
             game.add.existing(this);
         }

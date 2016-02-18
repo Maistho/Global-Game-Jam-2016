@@ -3,6 +3,7 @@
 
     export class Enemy extends Phaser.Sprite {
         body: Phaser.Physics.P2.Body;
+        hitsound: Phaser.Sound;
         constructor(
             game: Phaser.Game,
             x: number,
@@ -26,19 +27,30 @@
                 game.physics.p2.collisionGroups[CollisionGroup.Enemy],
                 game.physics.p2.collisionGroups[CollisionGroup.Player],
                 game.physics.p2.collisionGroups[CollisionGroup.Projectile]
-            ]);
+            ], (self: Phaser.Physics.P2.Body, other: Phaser.Physics.P2.Body) => {
+                if (other.sprite instanceof Spawn) {
+                    other.sprite.damage(1);
+                    this.kill();
+                }
+                }, this);
+            this.events.onKilled.add(() => {
+                
+            });
 
             this.body.rotation = rotation + Math.PI;
             this.body.thrust(-10000);
-            
+            this.hitsound = this.game.add.audio('hit1');
+
 
             game.add.existing(this);
         }
 
         damage(amount: number): Phaser.Sprite {
             super.damage(amount);
+            this.hitsound.play();
             
             return this;
         }
+        
     }
 }

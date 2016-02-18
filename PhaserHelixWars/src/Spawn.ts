@@ -3,7 +3,7 @@
 
     export class Spawn extends Phaser.Sprite {
         game: Phaser.Game;
-        spawnDistance: number = 300;
+        spawnDistance: number = 800;
         spawnTimer: Phaser.TimerEvent;
         body: Phaser.Physics.P2.Body;
         constructor(
@@ -15,6 +15,8 @@
             super(game, x, y, SpawnType[type]);
             this.anchor.set(0.5, 0.5);
             this.scale.set(0.2);
+            this.maxHealth = 20;
+            this.health = this.maxHealth;
 
             game.physics.p2.enable(this);
             this.body.static = true;
@@ -39,6 +41,12 @@
             var {rotation, pos} = this.circlePosition(this.spawnDistance);
             pos.add(this.x, this.y);
             var enemy = new Enemy(this.game, pos.x, pos.y, -rotation, enemyType);
+        }
+
+        damage(amount): Phaser.Sprite {
+            super.damage(amount);
+                console.log(this.health);
+            return this;
         }
     }
 }

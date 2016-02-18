@@ -4,6 +4,9 @@
         game: Phaser.Game;
         body: Phaser.Physics.P2.Body;
         myBullets: Phaser.Group;
+        sfx: Phaser.Sound;
+        bulletsPerShot: number = 3;
+        shotsPerSecond: number = 4;
         constructor(
             game: Phaser.Game,
             x: number,
@@ -13,6 +16,10 @@
             super(game, x, y, 'player');
             this.anchor.set(0.5, 0.4);
             this.scale.set(0.2);
+
+            console.log(this);
+            this.sfx = this.game.add.audio('shoot');
+
             game.physics.p2.enable(this);
 
             this.body.setCircle(60, 0, -10);
@@ -27,10 +34,26 @@
             this.gamepad.addCallbacks(this, {
                 onConnect: () => {
                     let shootButton = this.gamepad.getButton(Phaser.Gamepad.BUTTON_5);
-
+                    let shootTimer = this.game.time.create();
+                    let shoot = () => {
+                        new Bullet(this.game, this.x, this.y, this.body.rotation + Math.PI);
+                        for (let i = 1; i < this.bulletsPerShot; ++i) {
+                            new Bullet(this.game, this.x, this.y,
+                                this.body.rotation + Math.PI + (Math.PI / 10) * i);
+                            new Bullet(this.game, this.x, this.y,
+                                this.body.rotation + Math.PI - (Math.PI / 10) * i);
+                        }
+                        this.sfx.play();
+                    }
+                    shootTimer.loop(Phaser.Timer.SECOND / this.shotsPerSecond, shoot, this);
                     shootButton.onDown.add(() => {
                         console.log('start shooting');
-                        let bullet = new Bullet(this.game, this.x, this.y, this.body.rotation + Math.PI);
+                        shootTimer.start(0);
+                        shoot();
+                    });
+                    shootButton.onUp.add(() => {
+                        console.log('start shooting');
+                        shootTimer.stop(false);
                     });
                 }
             });
