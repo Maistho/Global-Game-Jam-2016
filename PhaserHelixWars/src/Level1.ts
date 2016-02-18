@@ -11,6 +11,9 @@
             this.load.image('Helix', 'sprites/Helix_Fossil.png');
             this.load.image('RegularEnemy', 'sprites/Magenta_Pointy_Character.png');
             this.load.image('bullet', 'sprites/Arrow.png');
+
+            this.load.audio('hit1', 'audio/hit_01.ogg');
+
             this.time.advancedTiming = true;
 
             //this.stage.disableVisibilityChange = true;

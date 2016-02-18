@@ -1,2 +1,4 @@
 game.js
 game.js.map
+*.js
+!Scripts/
